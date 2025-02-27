@@ -1,0 +1,35 @@
+@use "variables" as *;
+
+:host {
+  input {
+    background-color: $color-card-background;
+    margin-bottom: $spacing-2;
+    width: 100%;
+    border-radius: $rounded-md;
+    text-align: start;
+    font-size: $text-sm;
+    font-weight: $font-light;
+
+
+    &::placeholder {
+      color: $color-text-muted;
+    }
+
+    &:focus {
+      outline-width: $spacing-1;
+      outline-color: $color-primary;
+
+    }
+  }
+
+  input[variant="default"] {
+    padding: $spacing-2;
+  }
+
+  input[variant="large"] {
+    padding-inline: $spacing-2;
+    padding-top: $spacing-2;
+    padding-bottom: $spacing-8;
+    height: $spacing-16;
+  }
+}
