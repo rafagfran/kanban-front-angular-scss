@@ -21,7 +21,8 @@
     gap: $spacing-between-cards;
   }
 
-  .board__add-list-btn {
-    width: $size-column;
+  .board_add-list{
+    min-width: $size-column;
+    display: flex;
   }
 }

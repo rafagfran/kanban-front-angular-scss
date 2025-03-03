@@ -7,6 +7,7 @@ import {
 	moveItemInArray,
 	transferArrayItem,
 } from '@angular/cdk/drag-drop';
+import { HttpClient } from '@angular/common/http';
 import {
 	Component,
 	ElementRef,
@@ -45,6 +46,8 @@ export class BoardComponent {
 	columns: ColumnType[] = MOCK_DATA;
 	showInput = signal(false);
 	newListTitle = new FormControl('');
+
+	constructor(private http: HttpClient) {}
 
 	enableInput = () => {
 		this.showInput.set(true);

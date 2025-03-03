@@ -31,7 +31,6 @@
       width: $spacing-4;
       height: $spacing-4;
       flex-shrink: 0;
-
     }
   }
 
@@ -41,7 +40,7 @@
     &:hover {
       background-color: color-mix(
         in oklab,
-        var($color-primary) 90%,
+        $color-primary 80%,
         transparent
       );
     }
@@ -54,6 +53,11 @@
 
   button[variant="ghost"] {
     background-color: transparent;
+
+    &:hover {
+      background-color: hsla(0, 0%, 0%, 0.05);
+      ;
+    }
   }
 
   button[size="default"] {
