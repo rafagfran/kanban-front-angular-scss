@@ -7,13 +7,13 @@
   </header>
 
   <div class="column__cards" cdkDropList>
-    @for(task of columnData.tasks; track task.id){
-    <column-card cdkDrag [taskData]="task" />
+    @for(card of columnData.cards; track card.id){
+    <column-card cdkDrag [cardData]="card" />
     }
 
     @if(showInput()){
     <div #newTaskContainer>
-      <ui-input [focusOnInit]="true" [control]="newTaskTitle" 
+      <ui-input [focusOnInit]="true" [control]="newCardTitle"
         variant="large" placeholder="Insira um título" />
 
       <div class="new-task__actions">

@@ -1,13 +1,15 @@
 
-$color-primary: #3b82f6;
-$color-primary-text: #ffffff;
-$color-white: #ffffff;
-$color-border: #e2e8f0;
-$color-text: #333333;
-$color-text-muted: #6b7280;
-$color-column-background: #f3f4f6;
-$color-card-background: #ffffff;
-$color-background: #f3f4f6;
+$color-primary: #7c3aed; // Roxo vibrante para elementos primários
+$color-primary-text: #ede9fe; // Texto claro para contrastar com o roxo
+$color-white: #ffffff; // Branco puro para textos e ícones
+$color-border: #4c4c64; // Cinza-azulado para bordas
+$color-text: #f5f5f5; // Texto principal com tom claro
+$color-text-muted: #a1a1aa; // Texto secundário com tom mais suave
+$color-column-background: #2a2a3a; // Fundo das colunas com tom escuro e frio
+$color-card-background: #34344a; // Fundo dos cards com tom mais escuro
+$color-background: #1e1e2a; // Fundo geral escuro
+$color-board-background: #23232f; // Fundo do quadro com tom mais escuro
+$color-header-background: #2a2a3a; // Fundo do cabeçalho, combinando com as colunas
 
 $spacing-1: 0.25rem;
 $spacing-2: calc($spacing-1 * 2);

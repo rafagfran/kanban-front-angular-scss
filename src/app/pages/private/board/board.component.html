@@ -6,7 +6,7 @@
         (cdkDropListDropped)="dropColumn($event)">
 
         @for(column of columns; track column.id){
-        <board-column cdkDrag [columnData]="column" cdkDropList [cdkDropListData]="column.tasks"
+        <board-column cdkDrag [columnData]="column" cdkDropList [cdkDropListData]="column.cards"
           (cdkDropListDropped)="dropCard($event)" />
         }
       </div>
@@ -14,7 +14,7 @@
       <div class="board__add-list">
         @if(showInput()) {
         <div #newListContainer>
-          <ui-input [focusOnInit]="true" [control]="newListTitle" placeholder="Insert title" />
+          <ui-input [focusOnInit]="true" [control]="newColumnTitle" placeholder="Insert title" />
           <ui-button (onClick)="addNewList()">
             <span>Add list</span>
           </ui-button>
@@ -26,9 +26,6 @@
         </ui-button>
         }
       </div>
-
-
-
     </div>
   </main>
 </div>

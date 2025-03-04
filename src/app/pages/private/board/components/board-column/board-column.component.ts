@@ -1,6 +1,6 @@
-import { CdkDrag, CdkDragPlaceholder } from '@angular/cdk/drag-drop';
+import { CdkDrag } from '@angular/cdk/drag-drop';
+import { HttpClient } from '@angular/common/http';
 import {
-	ChangeDetectorRef,
 	Component,
 	ElementRef,
 	HostListener,
@@ -9,7 +9,7 @@ import {
 	signal,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ColumnType, MOCK_DATA, TaskType } from '../../../../../data/MOCK_DATA';
+import { TCard, TColumn } from '@type/types';
 import { UiButtonComponent } from '../../../../../shared/ui/ui-button/ui-button.component';
 import { UiInputComponent } from '../../../../../shared/ui/ui-input/ui-input.component';
 import { IconDotsThree } from '../../../../../svg/icons/dots.component';
@@ -22,7 +22,6 @@ import { ColumnCardComponent } from '../column-card/column-card.component';
 		UiButtonComponent,
 		IconDotsThree,
 		CdkDrag,
-		CdkDragPlaceholder,
 		UiInputComponent,
 		IconPlus,
 		UiInputComponent,
@@ -34,15 +33,16 @@ import { ColumnCardComponent } from '../column-card/column-card.component';
 export class BoardColumnComponent {
 	@ViewChild(UiInputComponent) inputNewTask!: UiInputComponent;
 	@ViewChild('newTaskContainer') newTaskContainer!: ElementRef<HTMLDivElement>;
-	@Input() columnData!: ColumnType;
+	@Input() columnData!: TColumn;
 	showInput = signal(false);
-	newTaskTitle = new FormControl('');
+	newCardTitle = new FormControl('');
 
-	constructor(private cdRef: ChangeDetectorRef) {}
+	constructor(private http: HttpClient) {}
+	// constructor(private cdRef: ChangeDetectorRef) {}
 
 	disableInput = () => {
 		this.showInput.set(false);
-		this.newTaskTitle.setValue('');
+		this.newCardTitle.setValue('');
 	};
 
 	enableInput = () => {
@@ -50,18 +50,29 @@ export class BoardColumnComponent {
 	};
 
 	addNewTaskToColumn = ({ columnId }: { columnId: string }) => {
-		if (this.newTaskTitle.value) {
-			const newTask: TaskType = {
-				id: Date.now().toString(),
-				title: this.newTaskTitle.value,
-				description: '',
-			};
-			MOCK_DATA.find((column) => column.id === columnId)?.tasks.push(newTask);
-			this.newTaskTitle.setValue('');
-			this.showInput.set(false);
-		} else {
-			this.inputNewTask.setFocus();
-		}
+		this.http
+			.post<TCard>('http://localhost:3000/card', {
+				title: this.newCardTitle.value,
+				columnId,
+			})
+			.subscribe((data) => {
+				this.columnData.cards.push(data);
+        this.newCardTitle.setValue('');
+        this.showInput.set(false);
+			});
+
+		// if (this.newTaskTitle.value) {
+		// 	const newTask: TCard = {
+		// 		id: Date.now().toString(),
+		// 		title: this.newTaskTitle.value,
+		// 		description: '',
+		// 	};
+		// 	MOCK_DATA.find((column) => column.id === columnId)?.tasks.push(newTask);
+		// 	this.newTaskTitle.setValue('');
+		// 	this.showInput.set(false);
+		// } else {
+		// 	this.inputNewTask.setFocus();
+		// }
 	};
 
 	@HostListener('document:click', ['$event'])
@@ -72,7 +83,7 @@ export class BoardColumnComponent {
 			!this.newTaskContainer.nativeElement.contains(event.target as Node)
 		) {
 			this.showInput.set(false);
-			this.newTaskTitle.setValue('');
+			this.newCardTitle.setValue('');
 		}
 	}
 }

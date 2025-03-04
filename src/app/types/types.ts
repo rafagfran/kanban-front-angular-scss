@@ -1,11 +1,12 @@
-export type TaskType = {
-  id: string;
-  title: string;
-  description: string;
+export type TCard = {
+	id: string;
+	position: number;
+	title: string;
 };
 
-export type ColumnType = {
-  id: string;
-  title: string;
-  tasks: TaskType[];
+export type TColumn = {
+	id: string;
+	position: number;
+	title: string;
+	cards: TCard[];
 };

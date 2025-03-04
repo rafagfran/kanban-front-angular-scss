@@ -1,7 +1,6 @@
 import {
 	CdkDrag,
 	CdkDragDrop,
-	CdkDragPlaceholder,
 	CdkDropList,
 	CdkDropListGroup,
 	moveItemInArray,
@@ -16,11 +15,10 @@ import {
 	signal,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MOCK_DATA, TaskType } from '../../../data/MOCK_DATA';
+import { TCard, TColumn } from '@type/types';
 import { UiButtonComponent } from '../../../shared/ui/ui-button/ui-button.component';
 import { UiInputComponent } from '../../../shared/ui/ui-input/ui-input.component';
 import { IconPlus } from '../../../svg/icons/plus.component';
-import { ColumnType } from '../../../types/types';
 import { BoardColumnComponent } from './components/board-column/board-column.component';
 import { BoardHeaderComponent } from './components/board-header/board-header.component';
 
@@ -29,7 +27,6 @@ import { BoardHeaderComponent } from './components/board-header/board-header.com
 	imports: [
 		BoardHeaderComponent,
 		CdkDrag,
-		CdkDragPlaceholder,
 		CdkDropList,
 		CdkDropListGroup,
 		BoardColumnComponent,
@@ -43,33 +40,44 @@ import { BoardHeaderComponent } from './components/board-header/board-header.com
 export class BoardComponent {
 	@ViewChild(UiInputComponent) inputNewList!: UiInputComponent;
 	@ViewChild('newListContainer') newListContainer!: ElementRef<HTMLDivElement>;
-	columns: ColumnType[] = MOCK_DATA;
+	columns: TColumn[] = [];
 	showInput = signal(false);
-	newListTitle = new FormControl('');
+	newColumnTitle = new FormControl('');
 
 	constructor(private http: HttpClient) {}
+
+	ngOnInit() {
+		this.http
+			.get<TColumn[]>('http://localhost:3000/column/with-cards')
+			.subscribe((data) => {
+				this.columns = data;
+			});
+	}
 
 	enableInput = () => {
 		this.showInput.set(true);
 	};
 
 	addNewList() {
-		if (this.newListTitle.value) {
-			this.columns.push({
-				id: Date.now().toString(),
-				title: this.newListTitle.value,
-				tasks: [],
-			});
-			this.showInput.set(false);
-			this.newListTitle.setValue('');
+		if (this.newColumnTitle.value) {
+			this.http
+				.post<TColumn>('http://localhost:3000/column', {
+					title: this.newColumnTitle.value,
+				})
+				.subscribe((newColumn) => {
+					console.log(newColumn);
+					this.columns = [...this.columns, newColumn];
+					this.newColumnTitle.setValue('');
+          this.showInput.set(false);
+				});
 		}
 	}
 
-	dropColumn(event: CdkDragDrop<ColumnType[]>) {
+	dropColumn(event: CdkDragDrop<TColumn[]>) {
 		moveItemInArray(this.columns, event.previousIndex, event.currentIndex);
 	}
 
-	dropCard(event: CdkDragDrop<TaskType[]>) {
+	dropCard(event: CdkDragDrop<TCard[]>) {
 		if (event.previousContainer === event.container) {
 			moveItemInArray(
 				event.container.data,
@@ -93,7 +101,7 @@ export class BoardComponent {
 			!this.newListContainer.nativeElement.contains(event.target as Node)
 		) {
 			this.showInput.set(false);
-			this.newListTitle.setValue('');
+			this.newColumnTitle.setValue('');
 		}
 	}
 }

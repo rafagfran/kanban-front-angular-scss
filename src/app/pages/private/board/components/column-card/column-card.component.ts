@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { TaskType } from '../../../../../data/MOCK_DATA';
+import { TCard } from '@type/types';
 
 @Component({
 	selector: 'column-card',
@@ -8,5 +8,5 @@ import { TaskType } from '../../../../../data/MOCK_DATA';
 	styleUrl: './column-card.component.scss',
 })
 export class ColumnCardComponent {
-	@Input() taskData!: TaskType;
+	@Input() cardData!: TCard;
 }
