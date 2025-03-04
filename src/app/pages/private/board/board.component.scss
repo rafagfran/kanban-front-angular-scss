@@ -22,8 +22,22 @@
     gap: $spacing-between-cards;
   }
 
-  .board_add-list{
+ .board__add-column-container{
     min-width: $size-column;
+    border: 1px;
     display: flex;
+
+
+    &_input{
+      background-color: $color-column-background;
+      height: fit-content;
+      padding: $spacing-2;
+      border-radius: $rounded-column;
+    }
+
+    &_btn-add-column{
+      width: 100%;
+      display: flex;
+    }
   }
 }
