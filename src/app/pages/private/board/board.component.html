@@ -13,6 +13,22 @@
 
       <div class="board__add-column-container">
         @if(showInput()) {
+        <div #newListContainer>
+          <ui-input [focusOnInit]="true" [control]="newColumnTitle" placeholder="Insert title" />
+          <ui-button  (onClick)="addNewList()">
+            <span>Add list</span>
+          </ui-button>
+        </div>
+        }@else {
+        <ui-button width="100%" (onClick)="enableInput()" variant="outline">
+          <icon-plus />
+          <span>Add new list</span>
+        </ui-button>
+        }
+      </div>
+
+      <!-- <div class="board__add-column-container">
+        @if(showInput()) {
         <div #newListContainer class="board__add-column-container__input">
           <ui-input [focusOnInit]="true" [control]="newColumnTitle" placeholder="Insert title" />
           <ui-button (onClick)="addNewList()">
@@ -27,7 +43,7 @@
           </ui-button>
         </div>
         }
-      </div>
+      </div> -->
     </div>
   </main>
 </div>

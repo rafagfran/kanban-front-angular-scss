@@ -10,6 +10,9 @@ export class UiButtonComponent {
 	@Input() btnType: 'button' | 'submit' | 'reset' = 'button';
 	@Input() variant: 'default' | 'outline' | 'ghost' = 'default';
 	@Input() size: 'default' | 'icon' | 'fullWidth' = 'default';
+	@Input() width = 'auto';
+	@Input() textAlign: 'left' | 'center' | 'right' = 'center';
+	@Input() justifyContent: 'start' | 'center' | 'end' = 'center';
 	@Output() onClick = new EventEmitter<Event>();
 
 	handleClick(event: Event) {

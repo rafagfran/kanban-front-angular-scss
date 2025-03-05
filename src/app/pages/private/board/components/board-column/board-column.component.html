@@ -1,9 +1,11 @@
 <div class="column">
   <header class="column__header">
     <span class="title">{{columnData.title}}</span>
-    <ui-button size="icon" variant="ghost">
+    <!-- <ui-button size="icon" variant="ghost">
       <icon-dots-three />
-    </ui-button>
+
+    </ui-button> -->
+    <ui-dropdown />
   </header>
 
   <div class="column__cards" cdkDropList>
@@ -13,9 +15,7 @@
 
     @if(showInput()){
     <div #newTaskContainer>
-      <ui-input [focusOnInit]="true" [control]="newCardTitle"
-        variant="large" placeholder="Insira um título" />
-
+      <ui-input [focusOnInit]="true" [control]="newCardTitle" variant="large" placeholder="Insira um título" />
       <div class="new-task__actions">
         <ui-button (onClick)="addNewTaskToColumn({ columnId: columnData.id })">
           <span>Add Card</span>
@@ -32,7 +32,7 @@
 
   <footer class="column__footer">
     @if(!showInput()){
-    <ui-button variant="ghost" (onClick)="enableInput()">
+    <ui-button width="100%" justifyContent="start" variant="ghost" (onClick)="enableInput()">
       <icon-plus />
       <span>Add new card</span>
     </ui-button>

@@ -1,4 +1,4 @@
-@use 'variables' as *;
+@use "variables" as *;
 
 :host {
   .board {
@@ -22,22 +22,13 @@
     gap: $spacing-between-cards;
   }
 
- .board__add-column-container{
-    min-width: $size-column;
-    border: 1px;
-    display: flex;
+  .board__add-column-container {
+    width: $size-column;
 
 
-    &_input{
-      background-color: $color-column-background;
-      height: fit-content;
-      padding: $spacing-2;
-      border-radius: $rounded-column;
-    }
+  }
 
-    &_btn-add-column{
-      width: 100%;
-      display: flex;
-    }
+  .board__add-column-container__input {
+    width: 100%;
   }
 }

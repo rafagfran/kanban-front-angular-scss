@@ -15,18 +15,20 @@ import { UiInputComponent } from '../../../../../shared/ui/ui-input/ui-input.com
 import { IconDotsThree } from '../../../../../svg/icons/dots.component';
 import { IconPlus } from '../../../../../svg/icons/plus.component';
 import { ColumnCardComponent } from '../column-card/column-card.component';
+import { UiDropdownComponent } from "../../../../../shared/ui/ui-dropdown/ui-dropdown.component";
 
 @Component({
 	selector: 'board-column',
 	imports: [
-		UiButtonComponent,
-		IconDotsThree,
-		CdkDrag,
-		UiInputComponent,
-		IconPlus,
-		UiInputComponent,
-		ColumnCardComponent,
-	],
+    UiButtonComponent,
+    IconDotsThree,
+    CdkDrag,
+    UiInputComponent,
+    IconPlus,
+    UiInputComponent,
+    ColumnCardComponent,
+    UiDropdownComponent
+],
 	templateUrl: './board-column.component.html',
 	styleUrl: './board-column.component.scss',
 })

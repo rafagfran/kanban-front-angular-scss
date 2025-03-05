@@ -4,8 +4,8 @@
   button {
     cursor: pointer;
     display: inline-flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     gap: $spacing-2;
     white-space: nowrap;
     border-radius: $rounded-md;
@@ -31,17 +31,17 @@
       height: $spacing-4;
       flex-shrink: 0;
     }
+
+    &.full-width {
+      width: 100%;
+    }
   }
 
   button[variant="default"] {
     background-color: $color-primary;
 
     &:hover {
-      background-color: color-mix(
-        in oklab,
-        $color-primary 80%,
-        transparent
-      );
+      background-color: color-mix(in oklab, $color-primary 80%, transparent);
     }
   }
 
@@ -55,7 +55,6 @@
 
     &:hover {
       background-color: hsla(0, 0%, 0%, 0.05);
-      ;
     }
   }
 
@@ -66,7 +65,8 @@
   }
 
   button[size="icon"] {
-    height: $spacing-9;
-    width: $spacing-9;
+    height: $spacing-7;
+    width: $spacing-7;
   }
+
 }

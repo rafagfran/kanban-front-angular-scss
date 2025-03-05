@@ -17,6 +17,7 @@
   box-sizing: border-box;
   border: $color-border;
   color: $color-text;
+  list-style: none;
 }
 
 body {
@@ -24,6 +25,7 @@ body {
   font-size: 1rem;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
 }
 
 .cdk-drag-preview {
