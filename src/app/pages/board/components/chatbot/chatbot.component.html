@@ -1,0 +1,29 @@
+<div class="chatbot">
+  @if(isActiveChatbot){
+  <div class="chatbot__container">
+    <header class="chatbot__header">
+      <button class="chatbot__close-btn" (click)="closeChatbot()">X</button>
+    </header>
+
+    <div class="chatbot__body">
+      <div class="chatbot__messages">
+        <p class="chatbot__message chatbot__message--user">Hi! I'm a chatbot. How can I help you today?</p>
+        <p class="chatbot__message  chatbot__message--bot">Hi! I'm a chatbot. How can I help you today?</p>
+      </div>
+
+    </div>
+
+    <footer class="chatbot__footer">
+      <ui-input  style="width: 100%;" placeholder="Type a message"></ui-input>
+      <ui-button variant="ghost" size="icon">
+        <icon-send />
+      </ui-button>
+    </footer>
+
+  </div>
+  }@else {
+  <button (click)="openChatbot()" class="chatbot__toggler">
+    <icon-automate color="black" height="25" width="25"/>
+  </button>
+  }
+</div>

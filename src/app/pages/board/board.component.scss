@@ -1,0 +1,35 @@
+@use "variables" as *;
+
+:host {
+  .board {
+    height: $size-board;
+    overflow-y: hidden;
+    padding-bottom: $spacing-4;
+    scrollbar-color: $color-column-background $color-card-background;
+    background-color: $color-board-background;
+  }
+
+  .board__container {
+    display: flex;
+    height: 100%;
+    gap: $spacing-between-columns;
+    overflow-x: auto;
+    padding: $spacing-4;
+    position: relative;
+  }
+
+  .board__columns {
+    display: flex;
+    gap: $spacing-between-cards;
+  }
+
+  .board__add-column-container {
+    width: $size-column;
+
+
+  }
+
+  .board__add-column-container__input {
+    width: 100%;
+  }
+}
