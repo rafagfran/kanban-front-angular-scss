@@ -1,12 +1,12 @@
-export type TCard = {
+export type Cards = {
 	id: string;
 	position: number;
 	title: string;
 };
 
-export type TColumn = {
+export type Columns = {
 	id: string;
 	position: number;
 	title: string;
-	cards: TCard[];
+	cards: Cards[];
 };

@@ -1,25 +1,38 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, signal } from '@angular/core';
+import { Component, EventEmitter, Output, signal } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { IconAutomate } from '@assets/icons/automate.component';
-import { IconSend } from '../../../../assets/icons/send.component';
+import { IconAutomate } from '@shared/icons/automate.component';
+import { IconDotsThree } from '../../../../shared/icons/dots.component';
+import { IconSend } from '../../../../shared/icons/send.component';
 import { UiButtonComponent } from '../../../../shared/ui/ui-button/ui-button.component';
 import { UiInputComponent } from '../../../../shared/ui/ui-input/ui-input.component';
-import { IconDotsThree } from "../../../../assets/icons/dots.component";
+import { BoardService } from '../../board.service';
 
 @Component({
 	selector: 'app-chatbot',
-	imports: [UiButtonComponent, UiInputComponent, IconSend, IconAutomate, IconDotsThree],
+	imports: [
+		UiButtonComponent,
+		UiInputComponent,
+		IconSend,
+		IconAutomate,
+		IconDotsThree,
+	],
 	templateUrl: './chatbot.component.html',
 	styleUrl: './chatbot.component.scss',
 })
 export class ChatbotComponent {
 	isActiveChatbot = false;
-  isBotWriting = signal(false)
+	isBotWriting = signal(false);
 	chatUserInput = new FormControl('');
-	messages = signal([{role: 'bot' , message: 'Hello! How can I help you today?'}]);
+	messages = signal([
+		{ role: 'bot', message: 'Hello! How can I help you today?' },
+	]);
+	@Output() actionTaken = new EventEmitter<boolean>();
 
-	constructor(private http: HttpClient) {}
+	constructor(
+		private http: HttpClient,
+		private boardService: BoardService,
+	) {}
 
 	openChatbot() {
 		this.isActiveChatbot = true;
@@ -30,15 +43,16 @@ export class ChatbotComponent {
 	}
 
 	async sendMessage() {
-    if(!this.chatUserInput.value ) return;
+		if (!this.chatUserInput.value) return;
 
-    this.isBotWriting.set(true)
+		this.isBotWriting.set(true);
 
+		this.messages.update((prev) => [
+			...prev,
+			{ role: 'user', message: this.chatUserInput.value ?? '' },
+		]);
 
-    this.messages.update((prev) => [...prev, {role: 'user', message: this.chatUserInput.value ?? ''}]);
-
-    try {
-      this.http
+		this.http
 			.post<{ success: boolean; data: string }>(
 				'http://localhost:3000/chatbot',
 				{
@@ -46,15 +60,13 @@ export class ChatbotComponent {
 				},
 			)
 			.subscribe((data) => {
-				this.messages.update((prev) => [...prev, {role: 'bot', message: data.data}]);
-        this.chatUserInput.setValue('');
-        this.isBotWriting.set(false)
+				this.messages.update((prev) => [
+					...prev,
+					{ role: 'bot', message: data.data },
+				]);
+				this.actionTaken.emit();
+				this.chatUserInput.setValue('');
+				this.isBotWriting.set(false);
 			});
-    } catch (error) {
-      this.isBotWriting.set(false)
-      console.log(error)
-    }
-
-
 	}
 }

@@ -9,11 +9,11 @@ import {
 	signal,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { IconPlus } from '@assets/icons/plus.component';
+import { IconPlus } from '@shared/icons/plus.component';
 import { UiButtonComponent } from '@shared/ui/ui-button/ui-button.component';
 import { UiDropdownComponent } from '@shared/ui/ui-dropdown/ui-dropdown.component';
 import { UiInputComponent } from '@shared/ui/ui-input/ui-input.component';
-import { TCard, TColumn } from '@type/types';
+import { Cards, Columns } from '@type/types';
 import { ColumnCardComponent } from '../column-card/column-card.component';
 
 @Component({
@@ -33,7 +33,7 @@ import { ColumnCardComponent } from '../column-card/column-card.component';
 export class BoardColumnComponent {
 	@ViewChild(UiInputComponent) inputNewTask!: UiInputComponent;
 	@ViewChild('newTaskContainer') newTaskContainer!: ElementRef<HTMLDivElement>;
-	@Input() columnData!: TColumn;
+	@Input() columnData!: Columns;
 	showInput = signal(false);
 	newCardTitle = new FormControl('');
 
@@ -51,7 +51,7 @@ export class BoardColumnComponent {
 
 	addNewTaskToColumn = ({ columnId }: { columnId: string }) => {
 		this.http
-			.post<TCard>('http://localhost:3000/card', {
+			.post<Cards>('http://localhost:3000/card', {
 				title: this.newCardTitle.value,
 				columnId,
 			})
@@ -62,7 +62,7 @@ export class BoardColumnComponent {
 			});
 
 		// if (this.newTaskTitle.value) {
-		// 	const newTask: TCard = {
+		// 	const newTask: Cards = {
 		// 		id: Date.now().toString(),
 		// 		title: this.newTaskTitle.value,
 		// 		description: '',

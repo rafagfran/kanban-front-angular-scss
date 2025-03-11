@@ -1,14 +1,16 @@
 @use "variables" as *;
 
 :host {
-  input {
+  textarea {
     background-color: $color-card-background;
     width: 100%;
     border-radius: $rounded-md;
     text-align: start;
     font-size: $text-sm;
     font-weight: $font-light;
-
+    border: $input-border;
+    resize: none;
+    padding: $spacing-2;
 
     &::placeholder {
       color: $color-text-muted;
@@ -17,18 +19,23 @@
     &:focus {
       outline: none;
       border: 1px solid $color-primary;
-
     }
   }
 
-  input[variant="default"] {
+  textarea[variant="default"] {
     padding: $spacing-2;
+    height: 100%;
+    min-height: 30px;
+    overflow: hidden;
   }
 
-  input[variant="large"] {
-    padding-inline: $spacing-2;
-    padding-top: $spacing-2;
-    padding-bottom: $spacing-8;
-    height: $spacing-16;
+  textarea[variant="large"] {
+    padding: $spacing-2;
+    min-height: $spacing-16;
+  }
+
+  textarea[variant="chatbot"] {
+    // border: ;
+
   }
 }

@@ -6,7 +6,6 @@ import {
 	moveItemInArray,
 	transferArrayItem,
 } from '@angular/cdk/drag-drop';
-import { HttpClient } from '@angular/common/http';
 import {
 	Component,
 	ElementRef,
@@ -15,45 +14,53 @@ import {
 	signal,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { IconPlus } from '@shared/icons/plus.component';
 import { UiButtonComponent } from '@shared/ui/ui-button/ui-button.component';
 import { UiInputComponent } from '@shared/ui/ui-input/ui-input.component';
-import { TCard, TColumn } from '@type/types';
-import { IconPlus } from '@assets/icons/plus.component';
+import { Cards, Columns } from '@type/types';
+import { BoardService } from './board.service';
 import { BoardColumnComponent } from './components/board-column/board-column.component';
 import { BoardHeaderComponent } from './components/board-header/board-header.component';
-import { ChatbotComponent } from "./components/chatbot/chatbot.component";
+import { ChatbotComponent } from './components/chatbot/chatbot.component';
 
 @Component({
 	selector: 'app-board',
 	imports: [
-    BoardHeaderComponent,
-    CdkDrag,
-    CdkDropList,
-    CdkDropListGroup,
-    BoardColumnComponent,
-    UiInputComponent,
-    UiButtonComponent,
-    IconPlus,
-    ChatbotComponent
-],
+		BoardHeaderComponent,
+		CdkDrag,
+		CdkDropList,
+		CdkDropListGroup,
+		BoardColumnComponent,
+		UiInputComponent,
+		UiButtonComponent,
+		IconPlus,
+		ChatbotComponent,
+	],
 	templateUrl: './board.component.html',
 	styleUrl: './board.component.scss',
 })
 export class BoardComponent {
 	@ViewChild(UiInputComponent) inputNewList!: UiInputComponent;
 	@ViewChild('newListContainer') newListContainer!: ElementRef<HTMLDivElement>;
-	columns: TColumn[] = [];
+
+	columns = signal<Columns[]>([]);
 	showInput = signal(false);
 	newColumnTitle = new FormControl('');
 
-	constructor(private http: HttpClient) {}
+	constructor(private boardService: BoardService) {}
+
+	getBoardData() {
+		this.boardService.fetchColumnsWithCards().subscribe({
+			next: (data) => {
+				this.columns.set(data);
+			},
+			error: (error) => console.log(error),
+			complete: () => console.log('Get Cols Success'),
+		});
+	}
 
 	ngOnInit() {
-		this.http
-			.get<TColumn[]>('http://localhost:3000/column/with-cards')
-			.subscribe((data) => {
-				this.columns = data;
-			});
+		this.getBoardData();
 	}
 
 	enableInput = () => {
@@ -61,25 +68,25 @@ export class BoardComponent {
 	};
 
 	addNewList() {
-		if (this.newColumnTitle.value) {
-			this.http
-				.post<TColumn>('http://localhost:3000/column', {
-					title: this.newColumnTitle.value,
-				})
-				.subscribe((newColumn) => {
-					console.log(newColumn);
-					this.columns = [...this.columns, newColumn];
-					this.newColumnTitle.setValue('');
-					this.showInput.set(false);
-				});
-		}
+		// if (this.newColumnTitle.value) {
+		// 	this.http
+		// 		.post<Columns>('http://localhost:3000/column', {
+		// 			title: this.newColumnTitle.value,
+		// 		})
+		// 		.subscribe((newColumn) => {
+		// 			console.log(newColumn);
+		// 			this.columns = [...this.columns, newColumn];
+		// 			this.newColumnTitle.setValue('');
+		// 			this.showInput.set(false);
+		// 		});
+		// }
 	}
 
-	dropColumn(event: CdkDragDrop<TColumn[]>) {
-		moveItemInArray(this.columns, event.previousIndex, event.currentIndex);
+	dropColumn(event: CdkDragDrop<Columns[]>) {
+		moveItemInArray(this.columns(), event.previousIndex, event.currentIndex);
 	}
 
-	dropCard(event: CdkDragDrop<TCard[]>) {
+	dropCard(event: CdkDragDrop<Cards[]>) {
 		if (event.previousContainer === event.container) {
 			moveItemInArray(
 				event.container.data,
@@ -95,6 +102,7 @@ export class BoardComponent {
 			);
 		}
 	}
+
 	@HostListener('document:click', ['$event'])
 	onClickOutside(event: Event) {
 		if (

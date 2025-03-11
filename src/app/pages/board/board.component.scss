@@ -24,12 +24,16 @@
   }
 
   .board__add-column-container {
+    flex-shrink: 0 !important;
     width: $size-column;
-
-
   }
 
-  .board__add-column-container__input {
-    width: 100%;
+  .board__add-column-form {
+    padding: $spacing-2;
+    background-color: $color-column-background;
+    border-radius: $rounded-column;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-between-cards;
   }
 }

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { TCard } from '@type/types';
+import { Cards } from '@type/types';
 
 @Component({
 	selector: 'column-card',
@@ -8,5 +8,5 @@ import { TCard } from '@type/types';
 	styleUrl: './column-card.component.scss',
 })
 export class ColumnCardComponent {
-	@Input() cardData!: TCard;
+	@Input() cardData!: Cards;
 }

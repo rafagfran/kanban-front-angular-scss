@@ -1,6 +1,7 @@
-
 $color-primary: #7c3aed; // Roxo vibrante para elementos primários
 $color-primary-text: #ede9fe; // Texto claro para contrastar com o roxo
+$color-muted: rgba(255, 255, 255, 0.3);
+$color-muted-hover: rgba(255, 255, 255, 0.25);
 $color-white: #ffffff; // Branco puro para textos e ícones
 $color-border: #4c4c64; // Cinza-azulado para bordas
 $color-text: #f5f5f5; // Texto principal com tom claro
@@ -48,6 +49,8 @@ $font-normal: 400;
 $font-medium: 500;
 $font-semibold: 600;
 $font-bold: 700;
+
+$input-border: 1px solid $color-border;
 
 $default-transition-duration: 150ms;
 

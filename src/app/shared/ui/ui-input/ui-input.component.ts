@@ -17,7 +17,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 export class UiInputComponent {
 	@ViewChild('inputRef') inputElement!: ElementRef<HTMLInputElement>;
 	@Input() focusOnInit = false;
-	@Input() variant: 'default' | 'large' = 'default';
+	@Input() variant: 'default' | 'large' | 'chatbot' = 'default';
 	@Input() type: 'text' | 'password' = 'text';
 	@Input() placeholder = '';
 

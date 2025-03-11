@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IconDotsThree } from '@assets/icons/dots.component';
+import { IconDotsThree } from '@shared/icons/dots.component';
 import { UiButtonComponent } from '../ui-button/ui-button.component';
 
 @Component({
@@ -19,7 +19,7 @@ export class UiDropdownComponent {
 		this.isMenuOpened = false;
 	}
 
-  handleDeleteColumn() {
-    console.log('Delete column');
-  }
+	handleDeleteColumn() {
+		console.log('Delete column');
+	}
 }

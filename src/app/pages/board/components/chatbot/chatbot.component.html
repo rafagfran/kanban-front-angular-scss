@@ -1,4 +1,4 @@
-<div class="chatbot">
+<section class="chatbot">
   @if(isActiveChatbot){
   <div class="chatbot__container">
     <header class="chatbot__header">
@@ -19,11 +19,10 @@
         <p class="chatbot__message  chatbot__message--bot"> <icon-dots-three /> </p>
         }
       </div>
-
     </div>
 
     <footer class="chatbot__footer">
-      <ui-input [control]="chatUserInput" style="width: 100%;" placeholder="Type a message"></ui-input>
+      <ui-input variant="chatbot"  [control]="chatUserInput" style="width: 100%;" placeholder="Type a message"></ui-input>
       <ui-button (onClick)="sendMessage()" variant="ghost" size="icon">
         <icon-send />
       </ui-button>
@@ -35,4 +34,4 @@
     <icon-automate color="black" height="25" width="25" />
   </button>
   }
-</div>
+</section>

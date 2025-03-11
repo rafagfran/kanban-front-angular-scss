@@ -7,12 +7,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 	styleUrl: './ui-button.component.scss',
 })
 export class UiButtonComponent {
+	@Input() style: Partial<CSSStyleDeclaration> = {};
 	@Input() btnType: 'button' | 'submit' | 'reset' = 'button';
-	@Input() variant: 'default' | 'outline' | 'ghost' = 'default';
+	@Input() variant: 'default' | 'outline' | 'ghost' | 'muted' = 'default';
 	@Input() size: 'default' | 'icon' | 'fullWidth' = 'default';
-	@Input() width = 'auto';
-	@Input() textAlign: 'left' | 'center' | 'right' = 'center';
-	@Input() justifyContent: 'start' | 'center' | 'end' = 'center';
 	@Output() onClick = new EventEmitter<Event>();
 
 	handleClick(event: Event) {

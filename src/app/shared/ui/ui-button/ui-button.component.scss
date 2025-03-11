@@ -3,7 +3,7 @@
 :host {
   button {
     cursor: pointer;
-    display: inline-flex;
+    display: flex;
     justify-content: center;
     align-items: center;
     gap: $spacing-2;
@@ -55,6 +55,14 @@
 
     &:hover {
       background-color: hsla(0, 0%, 0%, 0.05);
+    }
+  }
+
+  button[variant="muted"] {
+    background-color: $color-muted;
+
+    &:hover {
+      background-color: $color-muted-hover;
     }
   }
 
