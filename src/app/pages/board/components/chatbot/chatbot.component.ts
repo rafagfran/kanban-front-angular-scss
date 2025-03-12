@@ -53,7 +53,7 @@ export class ChatbotComponent {
 		]);
 
 		this.http
-			.post<{ success: boolean; data: string }>(
+			.post<{ toolCalls: boolean; message: string }>(
 				'http://localhost:3000/chatbot',
 				{
 					message: this.chatUserInput.value,
@@ -62,9 +62,11 @@ export class ChatbotComponent {
 			.subscribe((data) => {
 				this.messages.update((prev) => [
 					...prev,
-					{ role: 'bot', message: data.data },
+					{ role: 'bot', message: data.message },
 				]);
-				this.actionTaken.emit();
+				if (data.toolCalls) {
+					this.actionTaken.emit();
+				}
 				this.chatUserInput.setValue('');
 				this.isBotWriting.set(false);
 			});
