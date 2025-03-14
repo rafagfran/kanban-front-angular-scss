@@ -2,36 +2,68 @@
   @if(isActiveChatbot){
   <div class="chatbot__container">
     <header class="chatbot__header">
-      <button class="chatbot__close-btn" (click)="closeChatbot()">X</button>
+      <div class="chatbot__header-title">
+        <icon-automate color="#5c6bc0" height="20" width="20" />
+        <h3>Assistente Virtual</h3>
+      </div>
+      <button class="chatbot__close-btn" (click)="closeChatbot()" aria-label="Fechar">
+      x
+      </button>
     </header>
-
     <div class="chatbot__body">
-      <div class="chatbot__messages">
+      <div class="chatbot__messages" #messagesContainer>
         @for(message of messages(); track message) {
         @if(message.role === 'user' ) {
-        <p class="chatbot__message chatbot__message--user"> {{message.message}}</p>
+        <div class="chatbot__message-wrapper chatbot__message-wrapper--user">
+          <div class="chatbot__message chatbot__message--user">
+            {{message.message}}
+          </div>
+          <!-- <div class="chatbot__message-time">{{message.timestamp | date:'HH:mm'}}</div> -->
+          <div class="chatbot__message-time">13:15</div>
+        </div>
         }
         @else if(message.role === 'bot') {
-        <p class="chatbot__message  chatbot__message--bot"> {{message.message}} </p>
+        <div class="chatbot__message-wrapper chatbot__message-wrapper--bot">
+          <div class="chatbot__avatar">
+            <icon-automate color="#5c6bc0" height="16" width="16" />
+          </div>
+          <div class="chatbot__message chatbot__message--bot">
+            {{message.message}}
+          </div>
+          <!-- <div class="chatbot__message-time">{{message.timestamp | date:'HH:mm'}}</div> -->
+          <div class="chatbot__message-time">05:15</div>
+        </div>
         }
         }
         @if(isBotWriting()){
-        <p class="chatbot__message  chatbot__message--bot"> <icon-dots-three /> </p>
+        <div class="chatbot__message-wrapper chatbot__message-wrapper--bot">
+          <div class="chatbot__avatar">
+            <icon-automate color="#5c6bc0" height="16" width="16" />
+          </div>
+          <div class="chatbot__message chatbot__message--bot chatbot__message--typing">
+            <icon-dots-three color="black"/>
+          </div>
+        </div>
         }
       </div>
     </div>
-
     <footer class="chatbot__footer">
-      <ui-input variant="chatbot"  [control]="chatUserInput" style="width: 100%;" placeholder="Type a message"></ui-input>
-      <ui-button (onClick)="sendMessage()" variant="ghost" size="icon">
+      <ui-input
+        variant="chatbot"
+        [control]="chatUserInput"
+        class="chatbot__input"
+        placeholder="Digite sua mensagem..."
+        (keyup.enter)="sendMessage()">
+      </ui-input>
+      <ui-button (onClick)="sendMessage()"  size="icon" class="chatbot__send-btn">
         <icon-send />
       </ui-button>
     </footer>
-
   </div>
   }@else {
   <button (click)="openChatbot()" class="chatbot__toggler">
-    <icon-automate color="black" height="25" width="25" />
+    <icon-automate color="white" height="25" width="25" />
+    <span class="chatbot__toggler-pulse"></span>
   </button>
   }
 </section>
