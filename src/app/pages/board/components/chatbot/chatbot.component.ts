@@ -7,16 +7,19 @@ import { IconSend } from '../../../../shared/icons/send.component';
 import { UiButtonComponent } from '../../../../shared/ui/ui-button/ui-button.component';
 import { UiInputComponent } from '../../../../shared/ui/ui-input/ui-input.component';
 import { BoardService } from '../../board.service';
+import { TimeFormatPipe } from '../../../../time-format.pipe';
+import { IconClose } from "../../../../shared/icons/close";
 
 @Component({
 	selector: 'app-chatbot',
 	imports: [
-		UiButtonComponent,
-		UiInputComponent,
-		IconSend,
-		IconAutomate,
-		IconDotsThree,
-	],
+    UiButtonComponent,
+    UiInputComponent,
+    IconSend,
+    IconAutomate,
+    TimeFormatPipe,
+    IconClose
+],
 	templateUrl: './chatbot.component.html',
 	styleUrl: './chatbot.component.scss',
 })
@@ -25,8 +28,10 @@ export class ChatbotComponent {
 	isBotWriting = signal(false);
 	chatUserInput = new FormControl('');
 	messages = signal([
-		{ role: 'bot', message: 'Hello! How can I help you today?' },
+		{ role: 'bot', message: 'Olá, como posso te ajudar hoje?', timestamp: Date.now()},
 	]);
+	typingMessage = 'Processando ...';
+
 	@Output() actionTaken = new EventEmitter<boolean>();
 
 	constructor(
@@ -49,11 +54,11 @@ export class ChatbotComponent {
 
 		this.messages.update((prev) => [
 			...prev,
-			{ role: 'user', message: this.chatUserInput.value ?? '' },
+			{ role: 'user', message: this.chatUserInput.value ?? '', timestamp: Date.now()},
 		]);
 
 		this.http
-			.post<{ toolCalls: boolean; message: string }>(
+			.post<{ toolCalls: boolean; message: string, timestamp: Date}>(
 				'http://localhost:3000/chatbot',
 				{
 					message: this.chatUserInput.value,
@@ -62,13 +67,15 @@ export class ChatbotComponent {
 			.subscribe((data) => {
 				this.messages.update((prev) => [
 					...prev,
-					{ role: 'bot', message: data.message },
+					{ role: 'bot', message: data.message, timestamp: Date.now() },
 				]);
 				if (data.toolCalls) {
 					this.actionTaken.emit();
 				}
-				this.chatUserInput.setValue('');
+
 				this.isBotWriting.set(false);
 			});
+
+		this.chatUserInput.setValue('');
 	}
 }

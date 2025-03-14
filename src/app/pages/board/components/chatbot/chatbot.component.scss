@@ -20,6 +20,11 @@
       70% { box-shadow: 0 0 0 10px rgba(92, 107, 192, 0); }
       100% { box-shadow: 0 0 0 0 rgba(92, 107, 192, 0); }
     }
+
+    @keyframes text-loader{
+      0% {opacity: 1;}
+      100% {opacity: .2;}
+    }
   }
 
   .chatbot__toggler {
@@ -181,6 +186,15 @@
       display: flex;
       align-items: center;
       padding: $spacing-2 $spacing-3;
+
+      & span {
+        animation: text-loader 1s infinite alternate;
+        @for $i from 1 through 15 {
+          &:nth-child(#{$i+1}) {
+            animation-delay: #{$i*.1}s ;
+          }
+        }
+      }
 
       svg {
         animation: pulse 1s infinite;

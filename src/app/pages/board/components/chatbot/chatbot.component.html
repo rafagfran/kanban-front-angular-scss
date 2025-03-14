@@ -3,11 +3,11 @@
   <div class="chatbot__container">
     <header class="chatbot__header">
       <div class="chatbot__header-title">
-        <icon-automate color="#5c6bc0" height="20" width="20" />
-        <h3>Assistente Virtual</h3>
+        <icon-automate height="20" width="20" />
+        <h3>Assistente de automação</h3>
       </div>
       <button class="chatbot__close-btn" (click)="closeChatbot()" aria-label="Fechar">
-      x
+        <icon-close />
       </button>
     </header>
     <div class="chatbot__body">
@@ -18,44 +18,35 @@
           <div class="chatbot__message chatbot__message--user">
             {{message.message}}
           </div>
-          <!-- <div class="chatbot__message-time">{{message.timestamp | date:'HH:mm'}}</div> -->
-          <div class="chatbot__message-time">13:15</div>
+          <div class="chatbot__message-time">{{message.timestamp | timeFormat}}</div>
         </div>
         }
         @else if(message.role === 'bot') {
         <div class="chatbot__message-wrapper chatbot__message-wrapper--bot">
-          <div class="chatbot__avatar">
-            <icon-automate color="#5c6bc0" height="16" width="16" />
-          </div>
           <div class="chatbot__message chatbot__message--bot">
             {{message.message}}
           </div>
-          <!-- <div class="chatbot__message-time">{{message.timestamp | date:'HH:mm'}}</div> -->
-          <div class="chatbot__message-time">05:15</div>
+          <div class="chatbot__message-time">{{message.timestamp | timeFormat}}</div>
         </div>
         }
         }
         @if(isBotWriting()){
         <div class="chatbot__message-wrapper chatbot__message-wrapper--bot">
-          <div class="chatbot__avatar">
-            <icon-automate color="#5c6bc0" height="16" width="16" />
-          </div>
-          <div class="chatbot__message chatbot__message--bot chatbot__message--typing">
-            <icon-dots-three color="black"/>
+          <div (focus)="true" class="chatbot__message  chatbot__message--typing ">
+            @for(letter of typingMessage; track typingMessage){
+            <span>{{letter}}</span>
+            }
           </div>
         </div>
         }
+
       </div>
     </div>
     <footer class="chatbot__footer">
-      <ui-input
-        variant="chatbot"
-        [control]="chatUserInput"
-        class="chatbot__input"
-        placeholder="Digite sua mensagem..."
+      <ui-input variant="chatbot" [control]="chatUserInput" class="chatbot__input" placeholder="Digite sua mensagem..."
         (keyup.enter)="sendMessage()">
       </ui-input>
-      <ui-button (onClick)="sendMessage()"  size="icon" class="chatbot__send-btn">
+      <ui-button (onClick)="sendMessage()" size="icon" class="chatbot__send-btn">
         <icon-send />
       </ui-button>
     </footer>
