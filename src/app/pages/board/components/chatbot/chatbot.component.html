@@ -10,13 +10,14 @@
         <icon-close />
       </button>
     </header>
+
     <div class="chatbot__body">
       <div class="chatbot__messages" #messagesContainer>
         @for(message of messages(); track message) {
         @if(message.role === 'user' ) {
         <div class="chatbot__message-wrapper chatbot__message-wrapper--user">
           <div class="chatbot__message chatbot__message--user">
-            {{message.message}}
+            <span>{{message.content}}</span>
           </div>
           <div class="chatbot__message-time">{{message.timestamp | timeFormat}}</div>
         </div>
@@ -24,7 +25,7 @@
         @else if(message.role === 'bot') {
         <div class="chatbot__message-wrapper chatbot__message-wrapper--bot">
           <div class="chatbot__message chatbot__message--bot">
-            {{message.message}}
+            {{message.content}}
           </div>
           <div class="chatbot__message-time">{{message.timestamp | timeFormat}}</div>
         </div>

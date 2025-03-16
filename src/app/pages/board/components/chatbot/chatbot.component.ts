@@ -2,24 +2,23 @@ import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Output, signal } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { IconAutomate } from '@shared/icons/automate.component';
-import { IconDotsThree } from '../../../../shared/icons/dots.component';
+import { IconClose } from '../../../../shared/icons/close';
 import { IconSend } from '../../../../shared/icons/send.component';
 import { UiButtonComponent } from '../../../../shared/ui/ui-button/ui-button.component';
 import { UiInputComponent } from '../../../../shared/ui/ui-input/ui-input.component';
-import { BoardService } from '../../board.service';
 import { TimeFormatPipe } from '../../../../time-format.pipe';
-import { IconClose } from "../../../../shared/icons/close";
+import { BoardService } from '../../board.service';
 
 @Component({
 	selector: 'app-chatbot',
 	imports: [
-    UiButtonComponent,
-    UiInputComponent,
-    IconSend,
-    IconAutomate,
-    TimeFormatPipe,
-    IconClose
-],
+		UiButtonComponent,
+		UiInputComponent,
+		IconSend,
+		IconAutomate,
+		TimeFormatPipe,
+		IconClose,
+	],
 	templateUrl: './chatbot.component.html',
 	styleUrl: './chatbot.component.scss',
 })
@@ -27,8 +26,14 @@ export class ChatbotComponent {
 	isActiveChatbot = false;
 	isBotWriting = signal(false);
 	chatUserInput = new FormControl('');
-	messages = signal([
-		{ role: 'bot', message: 'Olá, como posso te ajudar hoje?', timestamp: Date.now()},
+	messages = signal<
+		{ role: string; content: string; timestamp: Date | number }[]
+	>([
+		{
+			role: 'bot',
+			content: 'Olá, como posso te ajudar hoje?',
+			timestamp: Date.now(),
+		},
 	]);
 	typingMessage = 'Processando ...';
 
@@ -54,11 +59,15 @@ export class ChatbotComponent {
 
 		this.messages.update((prev) => [
 			...prev,
-			{ role: 'user', message: this.chatUserInput.value ?? '', timestamp: Date.now()},
+			{
+				role: 'user',
+				content: this.chatUserInput.value ?? '',
+				timestamp: Date.now(),
+			},
 		]);
 
 		this.http
-			.post<{ toolCalls: boolean; message: string, timestamp: Date}>(
+			.post<{ toolCalls: boolean; message: string; timestamp: Date }>(
 				'http://localhost:3000/chatbot',
 				{
 					message: this.chatUserInput.value,
@@ -67,7 +76,7 @@ export class ChatbotComponent {
 			.subscribe((data) => {
 				this.messages.update((prev) => [
 					...prev,
-					{ role: 'bot', message: data.message, timestamp: Date.now() },
+					{ role: 'bot', content: data.message, timestamp: Date.now() },
 				]);
 				if (data.toolCalls) {
 					this.actionTaken.emit();
