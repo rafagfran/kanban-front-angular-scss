@@ -145,11 +145,12 @@
       align-self: flex-end;
     }
 
-    &--bot {
+    &--bot  {
       align-self: flex-start;
       display: flex;
       align-items: flex-end;
       gap: $spacing-2;
+
     }
   }
 
@@ -177,9 +178,9 @@
     }
 
     &--bot {
-      background-color: #f5f5f5;
+      // background-color: #f5f5f5;
+      border: $input-border;
       border-top-left-radius: 4px;
-      color: black;
     }
 
     &--typing {

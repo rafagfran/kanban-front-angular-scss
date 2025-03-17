@@ -2,13 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Output, signal } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { IconAutomate } from '@shared/icons/automate.component';
+import DOMPurify from 'dompurify';
 import { IconClose } from '../../../../shared/icons/close';
 import { IconSend } from '../../../../shared/icons/send.component';
 import { UiButtonComponent } from '../../../../shared/ui/ui-button/ui-button.component';
 import { UiInputComponent } from '../../../../shared/ui/ui-input/ui-input.component';
 import { TimeFormatPipe } from '../../../../time-format.pipe';
 import { BoardService } from '../../board.service';
-
 @Component({
 	selector: 'app-chatbot',
 	imports: [
@@ -74,9 +74,13 @@ export class ChatbotComponent {
 				},
 			)
 			.subscribe((data) => {
+				// Messages arrive in HTML format
+				// const htmlContent = marked(data.message) as string;
+				const safeResponse = DOMPurify.sanitize(data.message);
+
 				this.messages.update((prev) => [
 					...prev,
-					{ role: 'bot', content: data.message, timestamp: Date.now() },
+					{ role: 'bot', content: safeResponse, timestamp: Date.now() },
 				]);
 				if (data.toolCalls) {
 					this.actionTaken.emit();
