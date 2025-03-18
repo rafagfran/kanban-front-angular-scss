@@ -3,6 +3,7 @@ import { Component, EventEmitter, Output, signal } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { IconAutomate } from '@shared/icons/automate.component';
 import DOMPurify from 'dompurify';
+import { marked } from 'marked';
 import { IconClose } from '../../../../shared/icons/close';
 import { IconSend } from '../../../../shared/icons/send.component';
 import { UiButtonComponent } from '../../../../shared/ui/ui-button/ui-button.component';
@@ -31,11 +32,11 @@ export class ChatbotComponent {
 	>([
 		{
 			role: 'bot',
-			content: 'Olá, como posso te ajudar hoje?',
+			content: 'Hello, how can I help you today?',
 			timestamp: Date.now(),
 		},
 	]);
-	typingMessage = 'Processando ...';
+	typingMessage = 'Processing...';
 
 	@Output() actionTaken = new EventEmitter<boolean>();
 
@@ -74,9 +75,10 @@ export class ChatbotComponent {
 				},
 			)
 			.subscribe((data) => {
-				// Messages arrive in HTML format
-				// const htmlContent = marked(data.message) as string;
-				const safeResponse = DOMPurify.sanitize(data.message);
+				const { message } = data;
+
+				const converMessage = marked(message) as string;
+				const safeResponse = DOMPurify.sanitize(converMessage);
 
 				this.messages.update((prev) => [
 					...prev,

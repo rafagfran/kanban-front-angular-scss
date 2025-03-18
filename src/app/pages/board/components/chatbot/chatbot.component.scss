@@ -6,24 +6,40 @@
     bottom: $spacing-12;
     right: $spacing-4;
     width: 100%;
-    max-width: 380px;
+    max-width: 500px;
     z-index: 1000;
     font-family: var(--font-family, sans-serif);
 
     @keyframes slide-up {
-      from { transform: translateY(20px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
 
     @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(92, 107, 192, 0.6); }
-      70% { box-shadow: 0 0 0 10px rgba(92, 107, 192, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(92, 107, 192, 0); }
+      0% {
+        box-shadow: 0 0 0 0 rgba(92, 107, 192, 0.6);
+      }
+      70% {
+        box-shadow: 0 0 0 10px rgba(92, 107, 192, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(92, 107, 192, 0);
+      }
     }
 
-    @keyframes text-loader{
-      0% {opacity: 1;}
-      100% {opacity: .2;}
+    @keyframes text-loader {
+      0% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0.2;
+      }
     }
   }
 
@@ -47,11 +63,15 @@
       transform: scale(1.05);
     }
 
-    &-pulse {
+    &::after {
+      content: "";
       position: absolute;
       border-radius: 50%;
       width: 56px;
       height: 56px;
+    }
+
+    &:hover::after {
       animation: pulse 2s infinite;
     }
   }
@@ -69,7 +89,7 @@
   }
 
   .chatbot__header {
-    background-color: $color-primary;
+    border-bottom: $input-border;
     height: $spacing-12;
     width: 100%;
     display: flex;
@@ -145,12 +165,11 @@
       align-self: flex-end;
     }
 
-    &--bot  {
+    &--bot {
       align-self: flex-start;
       display: flex;
       align-items: flex-end;
       gap: $spacing-2;
-
     }
   }
 
@@ -190,9 +209,9 @@
 
       & span {
         animation: text-loader 1s infinite alternate;
-        @for $i from 1 through 15 {
-          &:nth-child(#{$i+1}) {
-            animation-delay: #{$i*.1}s ;
+        @for $i from 1 through 13 {
+          &:nth-child(#{$i + 1}) {
+            animation-delay: #{$i * 0.1}s;
           }
         }
       }

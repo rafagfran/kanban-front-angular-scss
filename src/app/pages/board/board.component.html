@@ -8,8 +8,11 @@
         (cdkDropListDropped)="dropColumn($event)">
 
         @for(column of columns(); track column.id){
-        <board-column cdkDrag [columnData]="column" cdkDropList [cdkDropListData]="column.cards"
-          (cdkDropListDropped)="dropCard($event)" />
+          <div class="example-box" cdkDrag >
+            <board-column  [columnData]="column" cdkDropList [cdkDropListData]="column.cards"
+            (cdkDropListDropped)="dropCard($event)" />
+          </div>
+
         }
       </div>
 

@@ -1,6 +1,7 @@
 import {
 	CdkDrag,
 	CdkDragDrop,
+	CdkDragPlaceholder,
 	CdkDropList,
 	CdkDropListGroup,
 	moveItemInArray,

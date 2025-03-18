@@ -65,10 +65,16 @@ body {
 //   width: 100%;
 // }
 .cdk-drag-placeholder {
-  opacity: 0;
-  min-height: 10px;
+  opacity: .2;
+  background: white;
+
 }
 
 .cdk-drag-animating {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-box {
+  height: fit-content;
+  border-radius: $rounded-column;
 }
